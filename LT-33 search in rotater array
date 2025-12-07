@@ -1,0 +1,34 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        return search1(nums, target, 0, nums.length - 1);
+    }
+
+    int search1(int[] nums, int target, int start, int end) {
+
+        if (start > end) return -1;
+
+        int mid = start + (end - start) / 2;
+
+        if (nums[mid] == target)
+            return mid;
+
+        // Left sorted part
+        if (nums[start] <= nums[mid]) {
+
+            if (nums[start] <= target && target <= nums[mid]) {
+                return search1(nums, target, start, mid - 1);
+            } else {
+                return search1(nums, target, mid + 1, end);
+            }
+
+        } else {
+            // Right sorted part
+
+            if (nums[mid] <= target && target <= nums[end]) {
+                return search1(nums, target, mid + 1, end);
+            } else {
+                return search1(nums, target, start, mid - 1);
+            }
+        }
+    }
+}
