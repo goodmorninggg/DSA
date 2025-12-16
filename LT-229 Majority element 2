@@ -1,0 +1,35 @@
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int n=nums.length;
+        int c1=0,c2=0;
+        int el1=0,el2=0;
+        
+        for(int val:nums){
+            if(c1==0 && el2!=val){
+                c1=1;
+                el1=val;
+            }else if(c2==0 && el1!=val){
+                c2=1;
+                el2=val;
+            }else if(val==el1) c1++;
+            else if(val==el2) c2++;
+            else{
+                c1--;
+                c2--;
+            }
+        }
+        c1=0;
+        c2=0;
+        for(int val:nums){
+            if(val==el1) c1++;
+            else if(val==el2) c2++;
+        }
+        ArrayList<Integer> res=new ArrayList<>();
+        if(c1>n/3) res.add(el1);
+        if(c2>n/3) res.add(el2);
+        
+        Collections.sort(res);
+        return res;
+        
+    }
+}
