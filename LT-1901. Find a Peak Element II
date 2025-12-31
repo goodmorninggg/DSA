@@ -1,0 +1,37 @@
+class Solution {
+    private int maxIndex(int[][] mat ,int n,int mid){//n is used because we hae to check throgh the rown and col is fixed a smid
+        int maxValue = Integer.MIN_VALUE;
+        int index=-1;
+        for(int i=0;i<n;i++){
+            if(mat[i][mid]>maxValue){
+                maxValue=mat[i][mid];
+                index=i;
+            }
+            
+        }
+        return index;
+
+    }
+    public int[] findPeakGrid(int[][] mat) {
+        int n=mat.length; // length of row
+        int m=mat[0].length; //length of column
+
+        int low=0;
+        int high=m-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            int maxIndexRow=maxIndex(mat,n,mid);
+            int left=(mid-1>=0)? mat[maxIndexRow][mid-1]:-1;
+            int right=(mid+1<m)? mat[maxIndexRow][mid+1]:-1;
+            if(mat[maxIndexRow][mid]>left && mat[maxIndexRow][mid]>right){
+                return new int[]{maxIndexRow, mid};
+            }
+            else if(mat[maxIndexRow][mid]<left){
+                high=mid-1;
+            }else {
+                low=mid+1;
+            }
+        }
+        return new int[]{-1,-1};
+    }
+}
