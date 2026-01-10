@@ -1,0 +1,39 @@
+class Solution {
+    private int findDay(int[] arr ,int cap){
+        int day=1;
+        int load=0;
+        for(int val:arr){
+            if(val+load>cap){
+                day++;
+                load=val;
+            }else{
+                load+=val;
+            }
+        }
+        return day;
+    }
+    public int shipWithinDays(int[] weights, int days) {
+        int low = 0;
+        int high = 0;
+
+        // low = max weight, high = sum of all weights
+        for (int w : weights) {
+            low = Math.max(low, w);
+            high += w;
+        }
+
+        // Binary Search
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if(findDay(weights,mid)<=days){
+                high=mid-1;
+
+            }else{
+                low=mid+1;
+            }
+        }
+        return low;
+            
+            
+    }
+}
